@@ -1,8 +1,19 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { ChakraProvider } from "@chakra-ui/react";
+import { AppProps } from "next/app";
+import { createContext, useState } from "react";
+
+export const AppContext = createContext<any>({});
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  const [opened, setOpened] = useState(new Set());
+
+  return (
+    <AppContext.Provider value={{ opened, setOpened }}>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </AppContext.Provider>
+  );
 }
 
-export default MyApp
+export default MyApp;
